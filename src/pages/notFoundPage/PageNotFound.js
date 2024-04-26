@@ -2,7 +2,10 @@ import { Button, Grid } from '@mui/material';
 import Lottie from 'lottie-react';
 import React, { useEffect } from 'react';
 import ChatBotAnimation from '../../ui/json/404PageNotFound.json';
+import { useNavigate } from 'react-router-dom';
+
 export const PageNotFound = ({ updatePageTitle }) => {
+  const naviGate = useNavigate();
   useEffect(() => {
     updatePageTitle('page not found');
   }, []);
@@ -18,7 +21,7 @@ export const PageNotFound = ({ updatePageTitle }) => {
         </Button>
       </Grid>
       <Grid item>
-        <Button style={{ position: 'relative', top: '-123px' }} onClick={() => window.location.replace('/')} color="primary" variant="text">
+        <Button style={{ position: 'relative', top: '-123px' }} onClick={() => {naviGate('/')}} color="primary" variant="text">
           Home Page
         </Button>
       </Grid>

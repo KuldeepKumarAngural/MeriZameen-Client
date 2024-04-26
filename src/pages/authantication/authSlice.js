@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginUser, signUpUser } from './authApi';
+import { loginUser, logoutUser, signUpUser } from './authApi';
 import { createSession, invalidateSession } from '../../configuration/session';
+import { SESSION_KEYS } from '../../constants/constant';
 
 const initialState = {
   authData: { isAuthenticated: false },
   signUpLoading:false,
   loginLoading:false,
+  userData:localStorage.getItem(SESSION_KEYS.USER),
   status: 'done',
 };
 
@@ -19,13 +21,17 @@ export const signUp = createAsyncThunk('auth/signUp', async (credentials) => {
   return response;
 });
 
+export const logout = createAsyncThunk('auth/logout', async () => {
+  const response = await logoutUser();
+  return response;
+});
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: (state) => {
+    logoutSession: (state) => {
       state.authData = { isAuthenticated: false };
-      state.screenData = undefined;
       invalidateSession();
       window.location.href = window.location.origin + process.env.REACT_APP_BASE_NAME + '/';
     },
@@ -48,16 +54,33 @@ export const authSlice = createSlice({
         state.status = 'done';
         state.loginLoading = false
         state.authData = action.payload;
-        console.log(action.payload.user);
-        createSession(action?.payload?.accessToken);
+        if (action?.payload?.userData) {
+          const decodedData = atob(action?.payload?.userData);
+          const [userId, name, email, mobile, roles] = decodedData.split(":");
+          const user = {
+            _id: userId,
+            name: name,
+            email: email,
+            mobile: mobile,
+            roles: roles,
+          };
+          localStorage.setItem(SESSION_KEYS.USER,JSON.stringify(user));
+          state.userData = user;
+          createSession(action?.payload?.accessToken);
+        }
+      })
+      .addCase(logout.fulfilled , (state,action)=>{
+        state.authData = { isAuthenticated: false };
+        invalidateSession();
       });
   },
 });
-export const { logout } = authSlice.actions;
+export const { logoutSession } = authSlice.actions;
 
 export const selectAuthData = (state) => state.auth.authData;
 export const selectLoginLoading = (state) => state.auth.loginLoading;
 export const selectSignUpLoading = (state) => state.auth.signUpLoading;
 export const selectAuthStatus = (state) => state.auth.status;
+export const selectUserData = (state) => state.auth.userData;
 
 export default authSlice.reducer;

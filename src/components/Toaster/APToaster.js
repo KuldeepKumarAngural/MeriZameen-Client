@@ -8,10 +8,13 @@ const APToaster = forwardRef(({ title, x, y, type }, ref) => {
   useImperativeHandle(
     ref,
     () => ({
+<<<<<<< HEAD
       showToaster: (props) => {
         setOpen(true)
+=======
+      showToast: (props) => {
+>>>>>>> a00ddcd325746f24a13812e45d1e02738d5ad9af
         setmessageData(props);
-        console.log('props', props);
         setOpen(true);
       },
     }),
@@ -24,9 +27,15 @@ const APToaster = forwardRef(({ title, x, y, type }, ref) => {
 
   return (
     <div>
+<<<<<<< HEAD
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={messageData?.position ? { ...messageData?.position } : { vertical: 'top', horizontal: 'center' }}>
         <Alert onClose={handleClose}  severity={messageData.messageType} variant="filled" sx={{ width: '400px',boxShadow:3, borderRadius: '30px' }}>
           {messageData.message}
+=======
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={messageData?.position ? { ...messageData?.position } : { vertical: 'top', horizontal: 'center' }}>
+        <Alert onClose={handleClose} severity={messageData.messageType || 'success'} variant="filled" sx={{ width: '400px', boxShadow: 3, borderRadius: '30px' }}>
+          {messageData?.messageText || ''}
+>>>>>>> a00ddcd325746f24a13812e45d1e02738d5ad9af
         </Alert>
       </Snackbar>
     </div>

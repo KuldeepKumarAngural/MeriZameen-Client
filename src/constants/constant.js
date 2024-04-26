@@ -52,7 +52,10 @@ export const basicInfo = [
 
 export const pages = ['Products', 'Pricing', 'Blog'];
 
-export const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+export const userSettings = [
+  'Profile', 'Account', 'Dashboard', 'Logout'
+];
+
 export const options = [
   { value: 'Agent', label: 'Agent' },
   { value: 'Builder', label: 'Builder' },
