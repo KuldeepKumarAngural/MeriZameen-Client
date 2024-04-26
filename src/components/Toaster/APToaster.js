@@ -9,6 +9,7 @@ const APToaster = forwardRef(({ title, x, y, type }, ref) => {
     ref,
     () => ({
       showToaster: (props) => {
+        setOpen(true)
         setmessageData(props);
         console.log('props', props);
         setOpen(true);
@@ -23,7 +24,7 @@ const APToaster = forwardRef(({ title, x, y, type }, ref) => {
 
   return (
     <div>
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={messageData?.position1 ? { ...messageData?.position1 } : { vertical: 'top', horizontal: 'center' }}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={messageData?.position ? { ...messageData?.position } : { vertical: 'top', horizontal: 'center' }}>
         <Alert onClose={handleClose}  severity={messageData.messageType} variant="filled" sx={{ width: '400px',boxShadow:3, borderRadius: '30px' }}>
           {messageData.message}
         </Alert>
