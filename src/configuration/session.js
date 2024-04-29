@@ -45,4 +45,5 @@ export function invalidateSession() {
     localStorage.removeItem(SESSION_KEYS.TOKEN);
     localStorage.removeItem(SESSION_KEYS.USER);
     localStorage.removeItem(SESSION_KEYS.EXPIRY);
+    window.location.href = window.location.origin+"/";
 }

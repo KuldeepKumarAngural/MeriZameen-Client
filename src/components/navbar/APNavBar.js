@@ -99,7 +99,7 @@ export const APNavBar = () => {
   };
 
   const handlePostPropertyEvent = React.useCallback(() => {
-      isLoggedIn() ? naviGate('/postAd') : modalRef.current.open();
+       naviGate('/postAd') 
   },[USER]);
 
   const handleUserClick = (eventName) => {
@@ -431,10 +431,6 @@ export const APNavBar = () => {
             </>
           }
         />
-
-        <APModalBox ref={modalRef} >
-          <SignInForm  route={'/postAd'} />
-        </APModalBox>
       </AppBar>
     </>
   );

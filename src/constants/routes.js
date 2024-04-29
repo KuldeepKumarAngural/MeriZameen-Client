@@ -10,16 +10,15 @@ import { selectUserData } from '../pages/authantication/authSlice';
 
 export const APRoutes = () => {
   const ROUTES = [
-    { name: '/', value: (index) => <Home key={index} updatePageTitle={updatePageTitle} /> },
-    { name: '/auth', value: (index) => <Auth key={index} updatePageTitle={updatePageTitle} /> },
+    { name: '/', value: (index) => (isLoggedIn ? <Home key={index} updatePageTitle={updatePageTitle} /> : <Auth key={index} updatePageTitle={updatePageTitle} />) },
+    { name: '/auth', value: (index) => (!isLoggedIn ? <Auth key={index} updatePageTitle={updatePageTitle} /> : <Home key={index} updatePageTitle={updatePageTitle} />) },
     { name: '/home', value: (index) => <Home key={index} updatePageTitle={updatePageTitle} /> },
     { name: '/home/:listId', value: (index) => <Item key={index} updatePageTitle={updatePageTitle} /> },
-    { name: '/postAd', value: (index) => isLoggedIn ? <PostProperty key={index} updatePageTitle={updatePageTitle} />:<PageNotFound updatePageTitle={updatePageTitle}/> },
+    { name: '/postAd', value: (index) => (isLoggedIn ? <PostProperty key={index} updatePageTitle={updatePageTitle} /> : <PageNotFound updatePageTitle={updatePageTitle} />) },
   ];
   const isLoggedIn = useSelector(selectUserData);
   const [pageTitle, updatePageTitle] = useState('');
 
-  
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
